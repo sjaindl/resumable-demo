@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
@@ -31,12 +32,29 @@ fun ResumableDownloadScreen(
     uploadStatus: String,
     progress: Float,
     isPaused: Boolean,
+    error: String?,
     onPause: () -> Unit,
     onResume: () -> Unit,
     onDownload: (String) -> Unit,
+    onErrorDialogDismissed: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var selectedFileUri by remember { mutableStateOf<String?>(null) }
+
+    error?.let {
+        AlertDialog(
+            onDismissRequest = onErrorDialogDismissed,
+            title = { Text(text = "Upload error") },
+            text = { Text(text = error) },
+            confirmButton = {
+                Button(
+                    onClick = onErrorDialogDismissed,
+                ) {
+                    Text(text = "OK")
+                }
+            },
+        )
+    }
 
     Box(
         modifier = modifier
@@ -53,7 +71,7 @@ fun ResumableDownloadScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = "Resumable file download demo using Ketch",
+                text = "Resumable file download demo using DownloadManager",
                 textAlign = TextAlign.Center,
             )
 
@@ -125,9 +143,11 @@ fun ResumableDownloadScreenPreview() {
             uploadStatus = "Status",
             progress = 0F,
             isPaused = false,
+            error = null,
             onPause = { },
             onResume = { },
             onDownload = { },
+            onErrorDialogDismissed = { },
         )
     }
 }

@@ -1,5 +1,6 @@
 package com.sjaindl.tusdemoapp.demo.download
 
+import android.app.DownloadManager
 import android.os.Bundle
 import android.os.Environment
 import androidx.activity.ComponentActivity
@@ -12,10 +13,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import com.ketch.DownloadConfig
-import com.ketch.Ketch
-import com.ketch.NotificationConfig
-import com.sjaindl.tusdemoapp.R
 import com.sjaindl.tusdemoapp.ui.theme.TusDemoAppTheme
 
 class ResumableDownloadDemoActivity: ComponentActivity() {
@@ -26,26 +23,11 @@ class ResumableDownloadDemoActivity: ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val ketch = Ketch
-            .builder()
-            .setNotificationConfig(
-                config = NotificationConfig(
-                    enabled = true,
-                    channelName = "download_demo",
-                    channelDescription = "Resumable Download Demo Channel",
-                    smallIcon = R.drawable.ic_launcher_foreground),
-            )
-            .setDownloadConfig(
-                config = DownloadConfig(
-                    connectTimeOutInMs = 20000L, //Default: 10000L
-                    readTimeOutInMs = 15000L //Default: 10000L
-                )
-            )
-            .build(context = this)
+        val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
 
         val directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
 
-        viewModel.init(baseDir = directory, ketch = ketch)
+        viewModel.init(baseDir = directory, downloadManager = downloadManager)
 
         setContent {
             TusDemoAppTheme {
@@ -53,6 +35,7 @@ class ResumableDownloadDemoActivity: ComponentActivity() {
                 val uploadStatus by viewModel.downloadStatus.collectAsState()
                 val progress by viewModel.progress.collectAsState()
                 val isPaused by viewModel.isPaused.collectAsState()
+                val error  by viewModel.error.collectAsState()
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
@@ -63,10 +46,13 @@ class ResumableDownloadDemoActivity: ComponentActivity() {
                         progress = progress,
                         isPaused = isPaused,
                         onPause = viewModel::pauseDownload,
+                        error = error,
                         onResume = viewModel::resumeDownload,
-                        onDownload = viewModel::beginDownload,
-                        modifier = Modifier
-                            .padding(innerPadding),
+                        onDownload = {
+                            viewModel.beginDownload(uri = it)
+                        },
+                        onErrorDialogDismissed = viewModel::onErrorDismissed,
+                        modifier = Modifier.padding(innerPadding),
                     )
                 }
             }
