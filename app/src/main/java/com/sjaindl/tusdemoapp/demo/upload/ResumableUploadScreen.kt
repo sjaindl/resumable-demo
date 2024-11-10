@@ -1,4 +1,4 @@
-package com.sjaindl.tusdemoapp
+package com.sjaindl.tusdemoapp.demo.upload
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,18 +22,15 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sjaindl.tusdemoapp.ui.theme.TusDemoAppTheme
 
 @Composable
-fun UploadScreen(
+fun ResumableUploadScreen(
     uploadStatus: String,
     progress: Float,
     isPaused: Boolean,
@@ -41,16 +39,15 @@ fun UploadScreen(
     onResume: () -> Unit,
     onUpload: (Uri) -> Unit,
     onErrorDialogDismissed: () -> Unit,
+    onCopyUrl: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var selectedFileUri by remember { mutableStateOf<Uri?>(null) }
-
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
         if (result.resultCode == RESULT_OK) {
             val intent = result.data
-            selectedFileUri = intent?.data
+            val selectedFileUri = intent?.data
 
             selectedFileUri?.let { uri ->
                 onUpload(uri)
@@ -87,7 +84,10 @@ fun UploadScreen(
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "File uploading test for tus.io")
+            Text(
+                text = "Resumable file upload demo using TUS",
+                textAlign = TextAlign.Center,
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -104,7 +104,12 @@ fun UploadScreen(
 
             Spacer(modifier = Modifier.height(height = 8.dp))
 
-            Text(text = uploadStatus)
+            Text(
+                text = uploadStatus,
+                modifier = Modifier.clickable {
+                    onCopyUrl()
+                }
+            )
 
             Spacer(modifier = Modifier.height(height = 8.dp))
 
@@ -144,7 +149,7 @@ fun UploadScreen(
 @Composable
 fun UploadScreenPreview() {
     TusDemoAppTheme {
-        UploadScreen(
+        ResumableUploadScreen(
             uploadStatus = "Status",
             progress = 0F,
             isPaused = false,
@@ -152,6 +157,7 @@ fun UploadScreenPreview() {
             onPause = { },
             onResume = { },
             onUpload = { },
+            onCopyUrl = { },
             onErrorDialogDismissed = { },
         )
     }

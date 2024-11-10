@@ -1,4 +1,4 @@
-package com.sjaindl.tusdemoapp
+package com.sjaindl.tusdemoapp.demo.upload
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -21,13 +21,15 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.net.URL
 
-class UploadScreenViewModel: ViewModel() {
+class ResumableUploadViewModel: ViewModel() {
     private val client by lazy {
         TusClient()
     }
 
     private var fileUri: Uri? = null
     private var uploadTask: Job? = null
+
+    var uploadUri: URL? = null
 
     private var _uploadStatus = MutableStateFlow(value = "")
     val uploadStatus = _uploadStatus.asStateFlow()
@@ -71,11 +73,11 @@ class UploadScreenViewModel: ViewModel() {
             _isPaused.value = false
 
             try {
-                val uploadURL = withContext(Dispatchers.IO) {
-                    performUpload(client = client, upload = upload, coroutineScope = this)
+                withContext(Dispatchers.IO) {
+                    uploadUri = performUpload(client = client, upload = upload, coroutineScope = this)
                 }
 
-                _uploadStatus.value = "Upload to $uploadURL finished!\n"
+                _uploadStatus.value = "Upload to $uploadUri finished!\n"
             } catch (e: IOException) {
                 _error.value = e
             } catch (e: ProtocolException) {
@@ -93,7 +95,7 @@ class UploadScreenViewModel: ViewModel() {
     ): URL {
         val uploader = client.resumeOrCreateUpload(upload)
         val totalBytes = upload.size
-        var uploadedBytes = 0L
+        var uploadedBytes: Long
 
         // Upload file in 1MiB chunks
         uploader.chunkSize = 1024 * 1024

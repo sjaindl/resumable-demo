@@ -10,8 +10,8 @@ android {
 
     defaultConfig {
         applicationId = "com.sjaindl.tusdemoapp"
-        minSdk = 29
-        targetSdk = 34
+        minSdk = 30
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -53,6 +53,7 @@ dependencies {
 
     implementation(libs.tus.android.client)
     implementation(libs.tus.java.client)
+    implementation(libs.ketch)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

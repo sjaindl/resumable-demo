@@ -1,6 +1,7 @@
-package com.sjaindl.tusdemoapp
+package com.sjaindl.tusdemoapp.demo.upload
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,11 +12,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.AnnotatedString
 import com.sjaindl.tusdemoapp.ui.theme.TusDemoAppTheme
 
-class UploadDemoActivity: ComponentActivity() {
+class ResumableUploadDemoActivity: ComponentActivity() {
 
-    private val viewModel: UploadScreenViewModel by viewModels()
+    private val viewModel: ResumableUploadViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +29,8 @@ class UploadDemoActivity: ComponentActivity() {
 
         setContent {
             TusDemoAppTheme {
+                val context = LocalContext.current
+                val clipboardManager = LocalClipboardManager.current
 
                 val uploadStatus by viewModel.uploadStatus.collectAsState()
                 val progress by viewModel.progress.collectAsState()
@@ -34,7 +40,7 @@ class UploadDemoActivity: ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                 ) { innerPadding ->
-                    UploadScreen(
+                    ResumableUploadScreen(
                         uploadStatus = uploadStatus,
                         progress = progress,
                         isPaused = isPaused,
@@ -47,6 +53,17 @@ class UploadDemoActivity: ComponentActivity() {
                             viewModel.beginUpload(uri = it, context = this)
                         },
                         onErrorDialogDismissed = viewModel::onErrorDismissed,
+                        onCopyUrl = {
+                            viewModel.uploadUri?.toString()?.let {
+                                clipboardManager.setText(AnnotatedString(it))
+
+                                Toast.makeText(
+                                    context,
+                                    "URI copied!",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        },
                         modifier = Modifier.padding(innerPadding),
                     )
                 }

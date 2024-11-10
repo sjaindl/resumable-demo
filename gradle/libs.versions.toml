@@ -9,6 +9,7 @@ espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.9.3"
 composeBom = "2024.10.01"
+ketch = "2.0.2"
 tusAndroid = "0.1.11"
 tusJava = "0.5.0"
 
@@ -28,6 +29,7 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+ketch = { group = "com.github.khushpanchal", name = "Ketch", version.ref = "ketch" }
 tus-android-client = { group = "io.tus.android.client", name = "tus-android-client", version.ref = "tusAndroid" }
 tus-java-client = { group = "io.tus.java.client", name = "tus-java-client", version.ref = "tusJava" }
 
