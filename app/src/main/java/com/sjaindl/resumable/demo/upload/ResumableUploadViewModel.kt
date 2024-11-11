@@ -1,4 +1,4 @@
-package com.sjaindl.tusdemoapp.demo.upload
+package com.sjaindl.resumable.demo.upload
 
 import android.content.Context
 import android.content.SharedPreferences

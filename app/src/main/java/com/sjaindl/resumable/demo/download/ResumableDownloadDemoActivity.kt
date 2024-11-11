@@ -1,4 +1,4 @@
-package com.sjaindl.tusdemoapp.demo.download
+package com.sjaindl.resumable.demo.download
 
 import android.os.Bundle
 import android.os.Environment
@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import com.ketch.DownloadConfig
 import com.ketch.Ketch
 import com.ketch.NotificationConfig
-import com.sjaindl.tusdemoapp.R
-import com.sjaindl.tusdemoapp.ui.theme.TusDemoAppTheme
+import com.sjaindl.resumable.R
+import com.sjaindl.resumable.ui.theme.ResumableDemoAppTheme
 
 class ResumableDownloadDemoActivity: ComponentActivity() {
 
@@ -48,7 +48,7 @@ class ResumableDownloadDemoActivity: ComponentActivity() {
         viewModel.init(baseDir = directory, ketch = ketch)
 
         setContent {
-            TusDemoAppTheme {
+            ResumableDemoAppTheme {
 
                 val uploadStatus by viewModel.downloadStatus.collectAsState()
                 val progress by viewModel.progress.collectAsState()

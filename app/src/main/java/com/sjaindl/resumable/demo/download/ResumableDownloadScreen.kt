@@ -1,4 +1,4 @@
-package com.sjaindl.tusdemoapp.demo.download
+package com.sjaindl.resumable.demo.download
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sjaindl.tusdemoapp.ui.theme.TusDemoAppTheme
+import com.sjaindl.resumable.ui.theme.ResumableDemoAppTheme
 
 @Composable
 fun ResumableDownloadScreen(
@@ -120,7 +120,7 @@ fun ResumableDownloadScreen(
 @Preview
 @Composable
 fun ResumableDownloadScreenPreview() {
-    TusDemoAppTheme {
+    ResumableDemoAppTheme {
         ResumableDownloadScreen(
             uploadStatus = "Status",
             progress = 0F,

@@ -1,4 +1,4 @@
-package com.sjaindl.tusdemoapp.demo
+package com.sjaindl.resumable.demo
 
 import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
@@ -13,9 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sjaindl.tusdemoapp.demo.download.ResumableDownloadDemoActivity
-import com.sjaindl.tusdemoapp.demo.upload.ResumableUploadDemoActivity
-import com.sjaindl.tusdemoapp.ui.theme.TusDemoAppTheme
+import com.sjaindl.resumable.demo.download.ResumableDownloadDemoActivity
+import com.sjaindl.resumable.demo.upload.ResumableUploadDemoActivity
+import com.sjaindl.resumable.ui.theme.ResumableDemoAppTheme
 
 @Composable
 fun DemoScreen(modifier: Modifier = Modifier) {
@@ -51,7 +51,7 @@ fun DemoScreen(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun DemoScreenPreview() {
-    TusDemoAppTheme {
+    ResumableDemoAppTheme {
         DemoScreen()
     }
 }

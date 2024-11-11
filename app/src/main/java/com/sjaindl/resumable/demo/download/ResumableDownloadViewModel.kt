@@ -1,4 +1,4 @@
-package com.sjaindl.tusdemoapp.demo.download
+package com.sjaindl.resumable.demo.download
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

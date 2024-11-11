@@ -22,5 +22,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "TusDemoApp"
+rootProject.name = "ResumableDemoApp"
 include(":app")

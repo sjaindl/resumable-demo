@@ -1,4 +1,4 @@
-package com.sjaindl.tusdemoapp.ui.theme
+package com.sjaindl.resumable.ui.theme
 
 import android.app.Activity
 import android.os.Build
@@ -34,7 +34,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun TusDemoAppTheme(
+fun ResumableDemoAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,

@@ -1,4 +1,4 @@
-package com.sjaindl.tusdemoapp
+package com.sjaindl.resumable
 
 import org.junit.Test
 

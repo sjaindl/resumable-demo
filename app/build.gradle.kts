@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.sjaindl.tusdemoapp"
+    namespace = "com.sjaindl.resumable"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.sjaindl.tusdemoapp"
+        applicationId = "com.sjaindl.resumable"
         minSdk = 30
         targetSdk = 35
         versionCode = 1

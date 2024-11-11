@@ -1,4 +1,4 @@
-package com.sjaindl.tusdemoapp.demo.upload
+package com.sjaindl.resumable.demo.upload
 
 import android.os.Bundle
 import android.widget.Toast
@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
-import com.sjaindl.tusdemoapp.ui.theme.TusDemoAppTheme
+import com.sjaindl.resumable.ui.theme.ResumableDemoAppTheme
 
 class ResumableUploadDemoActivity: ComponentActivity() {
 
@@ -28,7 +28,7 @@ class ResumableUploadDemoActivity: ComponentActivity() {
         viewModel.init(getSharedPreferences("tus", 0))
 
         setContent {
-            TusDemoAppTheme {
+            ResumableDemoAppTheme {
                 val context = LocalContext.current
                 val clipboardManager = LocalClipboardManager.current
 

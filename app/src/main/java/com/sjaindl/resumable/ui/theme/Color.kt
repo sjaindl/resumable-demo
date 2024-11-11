@@ -1,4 +1,4 @@
-package com.sjaindl.tusdemoapp.ui.theme
+package com.sjaindl.resumable.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

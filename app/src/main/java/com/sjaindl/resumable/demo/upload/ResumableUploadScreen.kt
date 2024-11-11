@@ -1,4 +1,4 @@
-package com.sjaindl.tusdemoapp.demo.upload
+package com.sjaindl.resumable.demo.upload
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -27,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sjaindl.tusdemoapp.ui.theme.TusDemoAppTheme
+import com.sjaindl.resumable.ui.theme.ResumableDemoAppTheme
 
 @Composable
 fun ResumableUploadScreen(
@@ -148,7 +148,7 @@ fun ResumableUploadScreen(
 @Preview
 @Composable
 fun UploadScreenPreview() {
-    TusDemoAppTheme {
+    ResumableDemoAppTheme {
         ResumableUploadScreen(
             uploadStatus = "Status",
             progress = 0F,
