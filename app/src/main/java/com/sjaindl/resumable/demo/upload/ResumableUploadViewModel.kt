@@ -74,7 +74,7 @@ class ResumableUploadViewModel: ViewModel() {
 
             try {
                 withContext(Dispatchers.IO) {
-                    uploadUri = performUpload(client = client, upload = upload, coroutineScope = this)
+                    uploadUri = performUpload(upload = upload, coroutineScope = this)
                 }
 
                 _uploadStatus.value = "Upload to $uploadUri finished!\n"
@@ -89,16 +89,15 @@ class ResumableUploadViewModel: ViewModel() {
     }
 
     private suspend fun performUpload(
-        client: TusClient,
         upload: TusUpload,
         coroutineScope: CoroutineScope,
     ): URL {
-        val uploader = client.resumeOrCreateUpload(upload)
+        val uploader = client.resumeOrCreateUpload(upload).apply {
+            chunkSize = 1024 * 1024 // Upload file in 1MiB chunks
+        }
+
         val totalBytes = upload.size
         var uploadedBytes: Long
-
-        // Upload file in 1MiB chunks
-        uploader.chunkSize = 1024 * 1024
 
         while (uploader.uploadChunk() > 0) {
             uploadedBytes = uploader.offset

@@ -40,8 +40,8 @@ class ResumableDownloadViewModel: ViewModel() {
                     }
 
                     model?.let {
-                        setDownloadStatus(status = it.status)
                         _progress.value = it.progress.toFloat()
+                        setDownloadStatus(status = it.status)
                     }
                 }
         }
